@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<widget id="TimeSeries.widget.TimeSeries" needsEntityContext="true" xmlns="http://www.mendix.com/widget/1.0/">
+    <name>Time series</name>
+    <description>Renders a chart</description> 
+    <icon>AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAAAQAAHQSAAB0EgAAAAAAAAAAAAD9/f3////////////4+Pj/0dPS/+7u7f/39/f//v7+///////x8fH//f39//7+/v/y8vL//v7+//39/f/x8fH/5eXl/93d3f/s7Oz/6enp//X19f/4+Pj/5OTk/9XV1f/y8vL/7e3t//X19f/v7+//5ubm//b29v/r6+v/7Ozs/+np6f/IyMj/6Ojo/+zs7P/09PT/9vb2//X19f/Hx8f/+vr6///////9/f3/+fn5//Ly8v//////8PDw//X19f/o6On/w8PE/9HR0f/T09P/19fX//Dw8P/d3d3/v7+///Hx8f/t7e3/7Ozs/+np6f/o6Oj/+Pj4/+zs7P/w8PD/4uLi/6ampP+1tbb/qqqr/8LDw//S0tP/vLy9/7Kys//n5+f/ysrK/9ra2v/Ly8v/2dnZ/+rq6v/d3d3/8PDw/+jo6/9+f4n/jo+K/4uLhv+mpaL/nJuY/6ysrP+RkY//1tbW/5ubm/+6urr/vb29/8TExP/S0tL/wcHB//Pz8//g4er/VVKA/1lSd/9NTWr/b3KC/2lsev+VmZn/bXB4/6KipP9paGT/iYiI/5eXl/+wsLH/s7Oz/62trv/u7u7/4uPp/1ZPfP9VPnn/SjB5/11Iev8/K2j/W0hx/0U6hf+Bgon/Sk1a/1pdXv90eHb/h4mG/6Wko/+GhYL/09PT//Py8/96e4n/VVho/2lpav9NRYH/TkRh/zgsXf80H1X/ZUt6/0Erb/9PO2H/XUx0/2BbhP+BhYv/SUto/729uv/w8O//l5eV/4KBf/+Pj47/Z2mS/5GTk/9kZm7/W19h/1NRev9dVl//Rj1m/0g6Yf9TOnD/UTl0/zcqc/+7vcf/8fHx/8LCw/+np6f/v7/A/5KRov/MzMv/lJSS/5OSkf9kZHX/foB9/2hqbP92en7/UVNs/0U/eP9STm//t7jR//r6+v/U1NT/0dHR/+Pj4/+1tbP/2dnZ/9DQ0P+9vb3/np6c/5ycnP+fnp//s7Ox/39/gv9lZ2D/cHF9/7q62P/v7+//5ubm//Hx8f/5+fn/1dXW/+jo6P/p6en/4+Pj/8fHyP+9vb3/zc3N/8jIyP+0tLT/oaGg/5GQlP/NzdT/8/Pz//T09P/7+/v//v7+/+3t7f/5+fn/9PT0//z8/P/p6en/2NjY/+Li4v/b29v/3Nzd/8rKyv/BwcH/39/d//n5+f/5+fn////////////29vb//Pz8//39/f///////f39/+Li4v/s7Oz/9PT0/+bm5v/f39//5ubm/+np6f/t7e3/8PDw//f39//09PT/8fHx//Pz8//y8vL/9fX1//T09P/g4OD/5+fn//T09P/n5+f/5+fn/+jo6P/u7u7/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==</icon>
+    <properties>        
+        <property key="xAxisLabel" type="string" required="false">
+            <caption>X-axis label</caption>
+            <category>X-axis</category>
+            <description>Label for the x-axis (horizontal)</description>   
+        </property>
+        <property key="xAxisFormat" type="string" required="false">
+            <caption>X-axis data format</caption>
+            <category>X-axis</category>
+            <description>Formats of date on x-axis (use NVD3 date formatting)</description>
+        </property>
+        <property key="yAxisLabel" type="string" required="false">
+            <caption>Y-axis label</caption>
+            <category>Y-axis</category>
+            <description>Label for the y-axis (vertical)</description>          
+        </property>
+        <property key="yAxisFormat" type="string" required="false">
+            <caption>Y-axis data format</caption>
+            <category>Y-axis</category>
+            <description>Format of data on y-axis</description>
+        </property>        
+        <property key="seriesConfig" type="object" isList="true">
+            <caption>Series</caption>
+            <category>Series Configuration</category>
+            <description>Add a series and configure its properties</description>
+            <properties>
+                <property key="seriesEntity" type="entity" pathType="reference" isPath="optional">
+                    <caption>Data entity</caption>
+                    <category>Data source</category>
+                    <description>The entity containing series points</description>
+                </property>
+                <property key="seriesSource" type="enumeration" defaultValue="xpath">
+                    <caption>Source</caption>
+                    <category>Data source</category>
+                    <description>Type of source</description>                
+                    <enumerationValues>
+                        <enumerationValue key="xpath">XPath</enumerationValue>
+                        <enumerationValue key="microflow">Microflow</enumerationValue>
+                    </enumerationValues> 
+                </property>
+                <property key="seriesXAttribute" type="attribute" entityProperty="seriesEntity">
+                    <caption>X-axis data</caption>
+                    <category>Data source</category>
+                    <description>Attribute containing dates for x-axis</description>
+                    <attributeTypes>
+                        <attributeType name="DateTime"/>
+                    </attributeTypes>
+                </property>
+               <property key="seriesYAttribute" type="attribute" entityProperty="seriesEntity">
+                    <caption>Y-axis data</caption>
+                    <category>Data source</category>
+                    <description>Attribute containing data for y-axis</description>
+                    <attributeTypes>
+                        <attributeType name="Decimal"/>
+                    </attributeTypes>
+                </property>
+                <property key="seriesKey" type="string">
+                    <caption>Name</caption>
+                    <category>Data source</category>
+                    <description>Used in the legend to interact with the chart</description>                
+                </property>
+                <property key="entityConstraint" type="entityConstraint" entityProperty="seriesEntity" required="false">
+                    <caption>Constraint</caption>
+                    <category>Source - XPath</category>
+                    <description>Constraint on the data from the data entity</description>
+                </property> 
+                <property key="dataSourceMicroflow" type="microflow" required="false">
+                    <caption>Data source microflow </caption>
+                    <category>Source - microflow</category>
+                    <description>Returns a series' coordinates</description>
+                    <returnType type="Object" entityProperty="seriesEntity" isList="true"/>
+                </property>
+                <property key="seriesColor" type="string" required="false">
+                    <caption>Series color</caption>
+                    <category>Appearance</category>
+                    <description>Color of the line in HTML colors; color name, RGB or HEX</description>
+                </property>
+                <property key="seriesFill" type="boolean" defaultValue="false">
+                    <caption>Fill area</caption>
+                    <category>Appearance</category>
+                    <description>Should series area be filled</description>
+                </property>
+            </properties>
+        </property>
+        <property key="width" type="integer" defaultValue="920">
+            <caption>Chart width</caption>
+            <category>Appearance</category>
+            <description>Width of the chart</description>
+        </property>
+        <property key="widthUnit" type="enumeration" defaultValue="auto">
+            <caption>Width unit</caption>
+            <category>Appearance</category>
+            <description></description>
+            <enumerationValues>
+                <enumerationValue key="auto">Auto</enumerationValue>
+                <enumerationValue key="pixels">Pixels</enumerationValue>
+            </enumerationValues> 
+        </property>
+        <property key="height" type="integer" defaultValue="500">
+            <caption>Chart height</caption>
+            <category>Appearance</category>
+            <description>Height of the chart</description>
+        </property>
+        <property key="heightUnit" type="enumeration" defaultValue="auto">
+            <caption>Height unit</caption>
+            <category>Appearance</category>
+            <description></description>
+            <enumerationValues>
+                <enumerationValue key="auto">Auto</enumerationValue>
+                <enumerationValue key="pixels">Pixels</enumerationValue>
+            </enumerationValues> 
+        </property>
+    </properties>
+</widget>
