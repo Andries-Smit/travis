@@ -38,7 +38,9 @@ module.exports = function(config) {
         karmaTypescriptConfig: {
             reports: {
                 "html": "./dist/coverage",
-                "text-summary": ""
+                "json": "./dist/coverage/json",
+                "lcovonly": "./dist/coverage/lcov",
+                "text": ""
             }
         },
         // singleRun: true

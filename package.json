@@ -6,7 +6,8 @@
   "copyright": "Mendix",
   "main": "Gruntfile.js",
   "scripts": {
-    "test": "karma start --browsers Firefox --single-run"
+    "test": "karma start --browsers Firefox --single-run",
+    "posttest": "codecov -f dist/coverage/json/**/*"
   },
   "repository": {
     "type": "git",
@@ -27,6 +28,7 @@
     "@types/nvd3": "^1.8.32",
     "@types/react": "^0.14.37",
     "@types/react-dom": "^0.14.17",
+    "codecov": "^1.0.1",
     "copy-webpack-plugin": "^3.0.1",
     "core-js": "^2.4.1",
     "enzyme": "^2.5.1",
