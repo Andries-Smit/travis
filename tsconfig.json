@@ -2,7 +2,7 @@
     "compilerOptions": {
         "baseUrl": ".",
         "rootDir": "./",
-        "outDir": "dist/tmp",
+        "outDir": "dist/tsc",
         "noEmitOnError": true,
         "sourceMap": true,
         "module": "amd",
@@ -12,7 +12,7 @@
         "declaration": false,
         "removeComments": true,
         "noLib": false,
-        "watch": true,
+        //"watch": true,
         "jsx": "react",
         "forceConsistentCasingInFileNames": true,
         "noFallthroughCasesInSwitch": true,
