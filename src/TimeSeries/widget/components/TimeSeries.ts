@@ -73,7 +73,7 @@ export class TimeSeries extends Component<WidgetProps, {}> {
             area: serieConfig.seriesFill,
             color: serieConfig.seriesColor ? serieConfig.seriesColor : undefined,
             key: serieConfig.seriesKey,
-            values: dataStore.series[serieConfig.seriesKey]
+            values: Object.keys(dataStore.series).length ? dataStore.series[serieConfig.seriesKey] : []
         }));
     }
 }

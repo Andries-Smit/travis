@@ -1,56 +1,89 @@
-import { mount, shallow } from "enzyme";
-import { DOM, createElement } from "react";
+import { ReactWrapper, mount, shallow } from "enzyme";
+import { DOM, HTMLAttributes, createElement } from "react";
 
 import { NVD3LineChart, Nvd3LineChartProps, configureComponents, isPlainObject } from "../NVD3LineChart";
-import * as d3 from "d3";
-import "nvd3";
 
 describe("NVD3LineChart", () => {
 
     const renderChart = (props?: Nvd3LineChartProps) => shallow(createElement(NVD3LineChart, props));
-    const domChart = (props?: Nvd3LineChartProps) => mount(createElement(NVD3LineChart, props));
+    const renderFull = (props?: Nvd3LineChartProps) => mount(createElement(NVD3LineChart, props));
+
     const chartProps = {
         chartProps: {},
         datum: [ {
             area: true,
             color: "F00",
-            key: "Serie 1",
+            key: "Series 1",
             values: [ { x: 1, y: 5 } ]
         } ],
         height: 20,
         width: 50
     };
+    const fullChart = renderFull(chartProps);
+    let myChart: ReactWrapper<HTMLAttributes<{}>, any>; // tricky
+    let svgDocument: HTMLElement;
+    beforeAll((done) => {
+        jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
+        setTimeout(() => {
+            myChart = fullChart.find(".nv-chart");
+            svgDocument = document.createElement("div");
+            svgDocument.innerHTML = myChart.html();
+            done();
+        }, 4000);
+    });
 
     it("should render an svg in a div node", () => {
         const output = renderChart(chartProps);
 
-        const divNode = DOM.div({},
-            DOM.svg()
+        expect(output).toMatchStructure(
+            DOM.div({ className: "nv-chart" },
+                DOM.svg()
+            )
         );
-
-        expect(output).toMatchStructure(divNode);
     });
 
-    it("should render with the class 'nv-chart'", () => {
+    it("should render div with the class 'nv-chart'", () => {
         const output = renderChart(chartProps);
 
         expect(output).toHaveClass("nv-chart");
     });
 
-    it("should render with style height", () => {
+    it("should render div with style height", () => {
         const output = renderChart(chartProps);
 
-        const style = output.first().prop("style");
-
-        expect(style.height).toBe(20);
+        expect(output.first().prop("style").height).toBe(20);
     });
 
-    it("should render with style width", () => {
+    it("should render div with style width", () => {
         const output = renderChart(chartProps);
 
-        const style = output.first().prop("style");
+        expect(output.first().prop("style").width).toBe(50);
+    });
 
-        expect(style.width).toBe(50);
+    it("Checking if component NVD3LineChart has div with class 'nv-chart'", () => {
+
+        expect(fullChart.find(".nv-chart").hasClass("nv-chart")).toEqual(true);
+    });
+
+    it("Checking if NVD3LineChart component mounts", () => {
+        spyOn(NVD3LineChart.prototype, "componentDidMount");
+        let spyOnChart = renderFull(chartProps);
+        expect(NVD3LineChart.prototype.componentDidMount).toHaveBeenCalledTimes(1);
+    });
+
+    it("Should have a legend", () => {
+        expect(svgDocument.getElementsByClassName("nvd3 nv-legend").length).toEqual(1);
+    });
+
+    it("Should have interactive guideline", () => {
+        expect(svgDocument.getElementsByClassName("nv-interactive").length).toEqual(1);
+    });
+
+    xit ("Should render when data is empty", () => {
+        // TODO: Implement this test.
+    });
+    xit("Should have the correct color", () => {
+        // TODO: Implement
     });
 
 });
@@ -69,7 +102,7 @@ describe("Util function isPlainObject", () => {
         expect(isPlainObject(simpleFunction)).toBe(false);
     });
 
-    it("should deny a instanciated object is a plain object", () => {
+    it("should deny that an instantiated object is a plain object", () => {
         class SomeClass {
             /* */
         }
@@ -108,8 +141,8 @@ describe("Util function configureComponents", () => {
         expect(chartObject.name).toBe("John");
     });
 
-    it("should set a attribute on a child object", () => {
-        const options = { setName: "John", location: { setName: "paradise" } };
+    it("should set an attribute on a child object", () => {
+        const options = { location: { setName: "paradise" }, setName: "John" };
         let chartObject = new Person();
 
         configureComponents(chartObject, options);
@@ -117,7 +150,7 @@ describe("Util function configureComponents", () => {
         expect(chartObject.location.name).toBe("paradise");
     });
 
-    it("should set not change an empty object", () => {
+    it("should not change an empty object", () => {
         const options = { setName: "John" };
         let nullObject: Person = null;
 

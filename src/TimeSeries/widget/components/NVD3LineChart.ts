@@ -1,4 +1,4 @@
-import * as d3 from "d3";
+import { Selection, select } from "d3";
 import "nvd3";
 import { Component, DOM } from "react";
 
@@ -44,10 +44,21 @@ export function configureComponents(chart: any, options: any) {
 
 export class NVD3LineChart extends Component<Nvd3LineChartProps, {}> {
     private resizeHandler: { clear: Function };
-    public chart: nv.LineChart;
+    private chart: nv.LineChart;
     private rendering: boolean;
-    private selection: d3.Selection<any>;
+    private selection: Selection<any>;
     private svg: Node;
+
+    render() {
+        // TODO check if handles height and width correctly.
+        const style = {
+            height: this.props.height,
+            width: this.props.width
+        };
+        return (DOM.div({ className: "nv-chart", style },
+            DOM.svg({ ref: n => this.svg = n })
+        ));
+    }
 
     componentDidMount() {
         nv.addGraph(this.renderChart.bind(this));
@@ -63,16 +74,6 @@ export class NVD3LineChart extends Component<Nvd3LineChartProps, {}> {
         }
     }
 
-    render() {
-        // TODO check if handles height and width correctly.
-        const style = {
-            height: this.props.height,
-            width: this.props.width
-        };
-        return (DOM.div({ className: "nv-chart", style },
-            DOM.svg({ ref: n => this.svg = n })
-        ));
-    }
 
     private renderChart() {
         this.chart = (this.chart && !this.rendering) ? this.chart : nv.models.lineChart();
@@ -82,7 +83,7 @@ export class NVD3LineChart extends Component<Nvd3LineChartProps, {}> {
             .showYAxis(true)
             .useInteractiveGuideline(true)
             .duration(350);
-        this.selection = d3.select(this.svg)
+        this.selection = select(this.svg)
             .datum(this.props.datum)
             .call(this.chart);
 
